@@ -45,7 +45,7 @@ symfony server:start
 
 ## Postman
 
-Importuj plik `postman/expense-tracker.postman_collection.json` w aplikacji Postman.
+Importuj plik `expense-tracker.postman_collection.json` w Postman.
 
 - Użyj danych testowych (email + hasło)
 
