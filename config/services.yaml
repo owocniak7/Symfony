@@ -1,0 +1,3 @@
+services:
+    App\Security\Voter\ExpenseVoter:
+        tags: ['security.voter']

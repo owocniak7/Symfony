@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Tests\Behat;
+
+use Behat\Behat\Context\Context;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class ApiContext implements Context
+{
+    private KernelInterface $kernel;
+    private ?Response $response = null;
+
+    public function __construct(KernelInterface $kernel)
+    {
+        $this->kernel = $kernel;
+    }
+
+    /**
+     * @When I request :method :uri
+     */
+    public function iRequest($method, $uri)
+    {
+        $request = Request::create($uri, $method, [], [], [], [
+            'HTTP_AUTHORIZATION' => 'Basic ' . base64_encode('user1@example.com:password')
+        ]);
+        $this->response = $this->kernel->handle($request);
+    }
+
+    /**
+     * @Then the response status should be :status
+     */
+    public function theResponseStatusShouldBe($status)
+    {
+        if ((int) $status !== $this->response->getStatusCode()) {
+            throw new \Exception(sprintf(
+                'Expected status %s but got %s',
+                $status,
+                $this->response->getStatusCode()
+            ));
+        }
+    }
+
+    /**
+     * @Then the response should contain :text
+     */
+    public function theResponseShouldContain($text)
+    {
+        $content = $this->response->getContent();
+        if (!str_contains($content, $text)) {
+            throw new \Exception("Text '$text' not found in response: $content");
+        }
+    }
+}

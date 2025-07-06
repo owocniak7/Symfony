@@ -1,0 +1,16 @@
+default:
+  extensions:
+    Behat\Symfony2Extension:
+      kernel:
+        bootstrap: tests/bootstrap.php
+        path: config/bootstrap.php
+    Behat\MinkExtension:
+      base_url: http://localhost:8000
+      sessions:
+        default:
+          symfony: ~
+
+  suites:
+    default:
+      contexts:
+        - App\Tests\Behat\ApiContext
