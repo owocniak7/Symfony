@@ -1,6 +1,6 @@
 {
   "name": "owocniak7/symfony",
-  "description": "Symfony Expense Tracker with full stack features for course project",
+  "description": "Symfony Expense Tracker",
   "type": "project",
   "require": {
     "php": "^8.1",
